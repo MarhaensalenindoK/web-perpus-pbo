@@ -8,7 +8,7 @@ class BookService
 {
     public function getBooks()
     {
-        return Book::all();
+        return Book::with('author')->get();
     }
 
     public function getBookById($id)

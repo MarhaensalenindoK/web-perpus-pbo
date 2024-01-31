@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('author_id')->constrained()->onDelete('cascade');
             $table->string('publisher');
             $table->year('publication_year');
             $table->string('status')->default('available'); // e.g., available, loaned out
