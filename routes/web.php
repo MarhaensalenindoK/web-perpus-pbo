@@ -17,4 +17,7 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
+// Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('index');
+});
