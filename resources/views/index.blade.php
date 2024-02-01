@@ -1,6 +1,7 @@
 @extends('layouts')
 
 @section('content')
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -30,11 +31,9 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{ asset('img/undraw_profile.svg') }}">
+                                <img class="img-profile rounded-circle" src="{{ asset('img/undraw_profile.svg') }}">
                             </a>
                         </li>
 
@@ -49,7 +48,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <a href="{{ route('export.pdf') }}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             Laporan Peminjaman
                         </a>
                     </div>
@@ -66,7 +65,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Buku
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">300</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$book_count}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fa fa-book fa-2x text-gray-300" aria-hidden="true"></i>
@@ -85,7 +84,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Total Penulis
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$author_count}}</div>
                                         </div>
                                         <div class="col-auto">
 
@@ -105,7 +104,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Total Anggota
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$member_count}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -124,7 +123,7 @@
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Total Peminjaman
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$loan_count}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-hand-holding fa-2x text-gray-300"></i>
@@ -148,6 +147,7 @@
                                         <table class="table table-bordered" id="table-book" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
+                                                    <th>No.</th>
                                                     <th>Title</th>
                                                     <th>Penulis</th>
                                                     <th>Penerbit</th>
@@ -156,13 +156,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @if($books)
+                                                @foreach($books as $book)
                                                 <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$book->title}}</td>
+                                                    <td>{{$book->author->name}}</td>
+                                                    <td>{{$book->publisher}}</td>
+                                                    <td>{{$book->publication_year}}</td>
+                                                    <td>
+                                                        @if($book->status == 'available')
+                                                        <span class="badge bg-primary text-white">Tersedia</span>
+                                                        @else
+                                                        <span class="badge bg-danger text-white">Tidak Tersedia</span>
+                                                        @endif
+                                                    </td>
                                                 </tr>
+                                                @endforeach
+                                                @else
+                                                <td colspan="6" style="text-align: center;">Data Kosong</td>
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -179,52 +193,60 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Daftar Anggota (Belum mengembalikan)</h6>
                                 </div>
-                                {{-- Todo: Per page 6 --}}
+                                @if($loans)
                                 <div class="card-body">
                                     <div class="row justify-content-center">
+                                        @foreach($loans as $loan)
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="card mb-4 py-3 border-left-primary">
                                                 <div class="card-header text-truncate">
-                                                    Nama Peminjam
+                                                    Nama Peminjam : {{$loan->member->name}}
                                                 </div>
                                                 <div class="card-body">
-                                                    Nama Buku
+                                                    Nama Buku : {{$loan->book->title}}
                                                 </div>
                                                 <div class="card-footer">
-                                                    <b>Tanggal Peminjaman : </b>
+                                                    <b>Tanggal Peminjaman : {{ \Carbon\Carbon::parse($loan->loan_date)->locale('id')->isoFormat('D MMMM Y')}}</b>
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="card-footer py-3">
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination m-0">
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                                    <ul class="pagination m-0">
+                                        @if ($loans->currentPage() > 1)
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $loans->previousPageUrl() }}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
-                                                </a>
+                                            </a>
+                                        </li>
+                                        @endif
+
+                                        @for ($i = 1; $i <= $loans->lastPage(); $i++)
+                                            <li class="page-item {{ ($i == $loans->currentPage()) ? 'active' : '' }}">
+                                                <a class="page-link" href="{{ $loans->url($i) }}">{{ $i }}</a>
                                             </li>
+                                            @endfor
+
+                                            @if ($loans->hasMorePages())
                                             <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                                                <a class="page-link" href="{{ $loans->nextPageUrl() }}" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             </li>
-                                        </ul>
-                                    </nav>
+                                            @endif
+                                    </ul>
                                 </div>
+                                @else
+                                <div class="p-4 d-flex justify-content-center">
+                                    <h4>Data Kosong</h4>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
+
 
                 </div>
                 <!-- /.container-fluid -->
