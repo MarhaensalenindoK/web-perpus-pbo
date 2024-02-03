@@ -13,8 +13,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item @if(View::yieldContent('page-name') == 'dashboard') active @endif">
+        <a href="dashboard" class="nav-link" href="index.html">
             <i class="fas fa-chart-line"></i>
             <span>Dashboard</span></a>
     </li>
@@ -27,29 +27,29 @@
         Manajemen
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)">
+    <li class="nav-item @if(View::yieldContent('page-name') == 'book') active @endif">
+        <a class="nav-link" href="books">
             <i class="fas fa-book-open"></i>
             <span>Buku</span>
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)">
+    <li class="nav-item @if(View::yieldContent('page-name') == 'author') active @endif">
+        <a class="nav-link" href="authors">
             <i class="fas fa-book-open"></i>
-            <span>Penulis</span>
+            <span>Pengarang</span>
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)">
+    <li class="nav-item @if(View::yieldContent('page-name') == 'member') active @endif">
+        <a class="nav-link" href="members">
             <i class="fas fa-book-open"></i>
             <span>Anggota</span>
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)">
+    <li class="nav-item @if(View::yieldContent('page-name') == 'loan') active @endif">
+        <a class="nav-link" href="loans">
             <i class="fas fa-book-open"></i>
             <span>Peminjaman</span>
         </a>

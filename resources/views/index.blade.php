@@ -2,6 +2,9 @@
 
 @section('content')
 
+@section('page-name', 'dashboard')
+
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
