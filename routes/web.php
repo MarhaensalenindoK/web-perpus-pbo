@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\MemberController;
+use App\Models\Loan;
+use App\Models\Member;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +26,27 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/export-pdf', [DashboardController::class, 'exportPDF'])->name('export.pdf');
+
+Route::get('books', [BookController::class, 'index']);
+Route::post('book-add', [BookController::class, 'store']);
+Route::get('book-detail/{id}', [BookController::class, 'detail']);
+Route::put('book-edit/{id}', [BookController::class, 'update']);
+Route::get('book-destroy/{id}', [BookController::class, 'destroy']);
+
+Route::get('authors', [AuthorController::class, 'index']);
+Route::post('author-add', [AuthorController::class, 'store']);
+Route::get('author-detail/{id}', [AuthorController::class, 'detail']);
+Route::put('author-edit/{id}', [AuthorController::class, 'update']);
+Route::get('author-destroy/{id}', [AuthorController::class, 'destroy']);
+
+Route::get('members', [MemberController::class, 'index']);
+Route::post('member-add', [MemberController::class, 'store']);
+Route::get('member-detail/{id}', [MemberController::class, 'detail']);
+Route::put('member-edit/{id}', [MemberController::class, 'update']);
+Route::get('member-destroy/{id}', [MemberController::class, 'destroy']);
+
+Route::get('loans', [LoanController::class, 'index']);
+Route::post('loan-add', [LoanController::class, 'store']);
+Route::get('loan-detail/{id}', [LoanController::class, 'detail']);
+Route::put('loan-edit/{id}', [LoanController::class, 'update']);
+Route::get('loan-destroy/{id}', [LoanController::class, 'destroy']);
