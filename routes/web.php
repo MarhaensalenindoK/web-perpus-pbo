@@ -29,15 +29,15 @@ Route::get('/export-pdf', [DashboardController::class, 'exportPDF'])->name('expo
 
 Route::get('books', [BookController::class, 'index']);
 Route::post('book-add', [BookController::class, 'store']);
-Route::get('book-detail/{id}', [BookController::class, 'detail']);
-Route::put('book-edit/{id}', [BookController::class, 'update']);
-Route::get('book-destroy/{id}', [BookController::class, 'destroy']);
+// Route::get('book-detail/{id}', [BookController::class, 'detail']);
+Route::put('book-edit', [BookController::class, 'update']);
+Route::delete('book-destroy', [BookController::class, 'destroy']);
 
 Route::get('authors', [AuthorController::class, 'index']);
 Route::post('author-add', [AuthorController::class, 'store']);
-Route::get('author-detail/{id}', [AuthorController::class, 'detail']);
-Route::put('author-edit/{id}', [AuthorController::class, 'update']);
-Route::get('author-destroy/{id}', [AuthorController::class, 'destroy']);
+// Route::get('author-detail/{id}', [AuthorController::class, 'detail']);
+Route::put('author-edit', [AuthorController::class, 'update']);
+Route::delete('author-destroy', [AuthorController::class, 'destroy']);
 
 Route::get('members', [MemberController::class, 'index']);
 Route::post('member-add', [MemberController::class, 'store']);

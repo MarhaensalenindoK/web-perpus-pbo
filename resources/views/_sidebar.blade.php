@@ -36,21 +36,21 @@
 
     <li class="nav-item @if(View::yieldContent('page-name') == 'author') active @endif">
         <a class="nav-link" href="authors">
-            <i class="fas fa-book-open"></i>
+            <i class="fas fa-pen"></i>
             <span>Pengarang</span>
         </a>
     </li>
 
     <li class="nav-item @if(View::yieldContent('page-name') == 'member') active @endif">
         <a class="nav-link" href="members">
-            <i class="fas fa-book-open"></i>
+            <i class="fa fa-user" aria-hidden="true"></i>
             <span>Anggota</span>
         </a>
     </li>
 
     <li class="nav-item @if(View::yieldContent('page-name') == 'loan') active @endif">
         <a class="nav-link" href="loans">
-            <i class="fas fa-book-open"></i>
+            <i class="fas fa-hand-holding"></i>
             <span>Peminjaman</span>
         </a>
     </li>

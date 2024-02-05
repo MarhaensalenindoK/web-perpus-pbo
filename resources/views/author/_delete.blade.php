@@ -7,13 +7,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Apa Anda yakin akan menghapus data Pengarang ini?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger">Hapus</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            </div>
+            <form action="{{ url('/author-destroy') }}" method="POST">
+                @method('DELETE')
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="author_id">
+                    <p>Apa Anda yakin akan menghapus data Pengarang <span class="detail-author text-bold"></span>?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

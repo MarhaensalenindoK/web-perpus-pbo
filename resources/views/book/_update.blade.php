@@ -7,9 +7,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="book-edit" method="post" enctype="multipart/form-data">
-                    @csrf
+            <form action="{{ url('/book-edit') }}" method="post" enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
+                <input type="hidden" name="book_id">
+                <div class="modal-body">
                     <div>
                         <Label for="title" class="form-label">Judul</Label>
                         <input type="text" name="title" id="title" class="form-control" placeholder="Ketik judul" value="{{old('title')}}" required>
@@ -28,8 +30,8 @@
                         <input type="text" name="publisher" id="publisher" class="form-control" placeholder="Ketik penerbit" value="{{old('publisher')}}" required>
                     </div>
                     <div class="pt-2">
-                        <Label for="publication-year" class="form-label">Tahun Terbit</Label>
-                        <input type="number" name="publication-year" id="publication-year" class="form-control" placeholder="Ketik tahun terbit" min="1900" max="2099" step="1" value="2024" required>
+                        <Label for="publication_year" class="form-label">Tahun Terbit</Label>
+                        <input type="number" name="publication_year" id="publication_year" class="form-control" placeholder="Ketik tahun terbit" min="1900" max="2099" step="1" value="2024" required>
                     </div>
                     <div class="pt-2">
                         <div class="form-check">
@@ -45,12 +47,12 @@
                             </label>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

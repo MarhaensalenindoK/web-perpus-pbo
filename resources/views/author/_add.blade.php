@@ -7,9 +7,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="author-add" method="post" enctype="multipart/form-data">
-                    @csrf
+            <form action="{{ url('/author-add') }}" method="post" enctype="multipart/form-data">
+                @method('POST')
+                @csrf
+                <div class="modal-body">
                     <div>
                         <Label for="name" class="form-label">Nama</Label>
                         <input type="text" name="name" id="name" class="form-control" placeholder="Ketik nama" value="{{old('name')}}" required>
@@ -18,12 +19,12 @@
                         <Label for="biography" class="form-label">Biografi</Label>
                         <textarea name="biography" id="biography" class="form-control" placeholder="Ketik biografi"></textarea>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Simpan</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

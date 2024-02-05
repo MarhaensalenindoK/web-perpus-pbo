@@ -21,9 +21,9 @@ class BookService
         return $book->save();
     }
 
-    public function updateBook($id, Book $book)
+    public function updateBook(Book $book)
     {
-        return Book::where('id', $id)->update($book->toArray());
+        return $book->save();
     }
 
     public function deleteBook($id)
