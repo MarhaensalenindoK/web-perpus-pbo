@@ -7,9 +7,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="member-edit" method="post" enctype="multipart/form-data">
-                    @csrf
+            <form action="{{ url('/member-edit') }}" method="post" enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="member_id">
                     <div>
                         <Label for="name" class="form-label">Nama</Label>
                         <input type="text" name="name" id="name" class="form-control" placeholder="Ketik nama" value="{{old('name')}}" required>
@@ -22,12 +24,12 @@
                         <Label for="date" class="form-label">Tanggal Daftar</Label>
                         <input type="date" name="date" id="date" class="form-control">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

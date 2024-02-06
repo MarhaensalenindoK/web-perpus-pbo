@@ -42,8 +42,8 @@ Route::delete('author-destroy', [AuthorController::class, 'destroy']);
 Route::get('members', [MemberController::class, 'index']);
 Route::post('member-add', [MemberController::class, 'store']);
 Route::get('member-detail/{id}', [MemberController::class, 'detail']);
-Route::put('member-edit/{id}', [MemberController::class, 'update']);
-Route::get('member-destroy/{id}', [MemberController::class, 'destroy']);
+Route::put('member-edit', [MemberController::class, 'update']);
+Route::delete('member-destroy', [MemberController::class, 'destroy']);
 
 Route::get('loans', [LoanController::class, 'index']);
 Route::post('loan-add', [LoanController::class, 'store']);

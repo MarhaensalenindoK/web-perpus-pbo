@@ -162,7 +162,7 @@
 
     $('.edit-btn').click(function (e) {
         let authorId = $(this).parent().data('id')
-        let currentAuthor = authors.find(book => book.id === authorId)
+        let currentAuthor = authors.find(author => author.id === authorId)
 
         $('#edit-author input[name=author_id]').val(authorId);
         $('#edit-author input[name=name]').val(currentAuthor.name ?? '');
