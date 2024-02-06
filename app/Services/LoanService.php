@@ -21,9 +21,9 @@ class LoanService
         return $loan->save();
     }
 
-    public function updateLoan($id, Loan $loan)
+    public function updateLoan(Loan $loan)
     {
-        return Loan::where('id', $id)->update($loan->toArray());
+        return $loan->save();
     }
 
     public function deleteLoan($id)
