@@ -85,11 +85,11 @@
                                                     <td>{{$member->name}}</td>
                                                     <td>{{$member->email}}</td>
                                                     <td>{{$member->registration_date}}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-member">
+                                                    <td data-id="{{ $member['id'] }}">
+                                                        <button type="button" class="btn btn-primary edit-btn">
                                                             Edit
                                                         </button>
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-member">
+                                                        <button type="button" class="btn btn-danger destroy-btn">
                                                             Hapus
                                                         </button>
                                                     </td>
@@ -148,6 +148,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    @include('member._status')
     @include('member._add')
     @include('member._update')
     @include('member._delete')
@@ -155,6 +156,48 @@
 @endsection
 
 @push('script')
+@if(session('status'))
+    <script>
+        $(`#modal-status`).modal(`show`)
+        $(`#modal-status .modal-body`).html(`{{ session('status') }}`);
+    </script>
+    @if(session('clearStatus'))
+        <script>
+            window.onload = function() {
+                history.replaceState(null, null, window.location.href);
+            }
+        </script>
+    @endif
+@endif
 <!-- Page level custom scripts -->
-<script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+<script>
+    let members = @json($members);
+    members = members.data ?? []
+
+    $('.edit-btn').click(function (e) {
+        let memberId = $(this).parent().data('id')
+        let currentMember = members.find(member => member.id === memberId)
+
+        var current = new Date(currentMember.registration_date);
+
+        var dateStr = current.getFullYear() + '-' + ('0' + (current.getMonth() + 1)).slice(-2) + '-' + ('0' + current.getDate()).slice(-2)
+
+        $('#edit-member input[name=member_id]').val(memberId);
+        $('#edit-member input[name=name]').val(currentMember.name ?? '');
+        $('#edit-member input[name=email]').val(currentMember.email ?? '');
+        $('#edit-member input[name=date]').val(dateStr ?? '');
+
+        $(`#edit-member`).modal(`show`)
+    });
+
+    $('.destroy-btn').click(function (e) {
+        let memberId = $(this).parent().data('id')
+        let currentMember = members.find(member => member.id === memberId)
+
+        $('#delete-member input[name=member_id]').val(memberId);
+        $('#delete-member .detail-member').html(currentMember.name);
+
+        $(`#delete-member`).modal(`show`)
+    });
+</script>
 @endpush

@@ -21,9 +21,9 @@ class MemberService
         return $member->save();
     }
 
-    public function updateMember($id, Member $member)
+    public function updateMember(Member $member)
     {
-        return Member::where('id', $id)->update($member->toArray());
+        return $member->save();
     }
 
     public function deleteMember($id)

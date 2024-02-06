@@ -21,9 +21,9 @@ class AuthorService
         return $author->save();
     }
 
-    public function updateAuthor($id, Author $author)
+    public function updateAuthor(Author $author)
     {
-        return Author::where('id', $id)->update($author->toArray());
+        return $author->save();
     }
 
     public function deleteAuthor($id)

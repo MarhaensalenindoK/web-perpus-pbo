@@ -7,8 +7,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="book-add" method="post" enctype="multipart/form-data">
+            <form action="{{ url('/book-add') }}" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    @method('POST')
                     @csrf
                     <div>
                         <Label for="title" class="form-label">Judul</Label>
@@ -28,15 +29,15 @@
                         <input type="text" name="publisher" id="publisher" class="form-control" placeholder="Ketik penerbit" value="{{old('publisher')}}" required>
                     </div>
                     <div class="pt-2">
-                        <Label for="publication-year" class="form-label">Tahun Terbit</Label>
-                        <input type="number" name="publication-year" id="publication-year" class="form-control" placeholder="Ketik tahun terbit" min="1900" max="2099" step="1" value="2024" required>
+                        <Label for="publication_year" class="form-label">Tahun Terbit</Label>
+                        <input type="number" name="publication_year" id="publication_year" class="form-control" placeholder="Ketik tahun terbit" min="1900" max="2099" step="1" value="2024" required>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Simpan</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
