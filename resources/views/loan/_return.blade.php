@@ -7,13 +7,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Apa Anda yakin akan mengubah status pengembalian buku?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Kembalikan</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            </div>
+            <form action="{{ url('/loan-return') }}" method="post" enctype="multipart/form-data">
+                @method('PUT')
+                @csrf
+                <input type="hidden" name="loan_id">
+                <input type="hidden" name="book_id">
+                <div class="modal-body">
+                    <p>Apa Anda yakin akan mengubah status peminjaman buku?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Kembalikan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

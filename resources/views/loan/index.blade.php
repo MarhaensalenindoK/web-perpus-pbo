@@ -96,7 +96,7 @@
 
                                                     @if($loan->status == 'loaned')
                                                     <td>
-                                                        <span class="badge bg-secondary text-white" data-toggle="modal" data-target="#return-loan">Dipinjam</span>
+                                                        <span class="badge bg-secondary text-white">Dipinjam</span>
                                                     </td>
                                                     @else
                                                     <td>
@@ -104,13 +104,18 @@
                                                     </td>
                                                     @endif
 
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-loan">
+                                                    <td data-id="{{ $loan['id'] }}">
+                                                        <button type="button" class="btn btn-primary edit-btn">
                                                             Edit
                                                         </button>
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-loan">
+                                                        <button type="button" class="btn btn-danger destroy-btn">
                                                             Hapus
                                                         </button>
+                                                        @if($loan->status == 'loaned')
+                                                        <button type="button" class="btn btn-success return-btn">
+                                                            Kembalikan Buku
+                                                        </button>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -171,10 +176,64 @@
     @include('loan._update')
     @include('loan._delete')
     @include('loan._return')
+    @include('loan._status')
+
 </body>
 @endsection
-
 @push('script')
-<!-- Page level custom scripts -->
-<script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+
+@if(session('status'))
+<script>
+    $(`#modal-status`).modal(`show`)
+    $(`#modal-status .modal-body`).html(`{{ session('status') }}`);
+</script>
+@if(session('clearStatus'))
+<script>
+    window.onload = function() {
+        history.replaceState(null, null, window.location.href);
+    }
+</script>
+@endif
+@endif
+
+<script>
+    let loans = @json($loans);
+    loans = loans.data ?? []
+
+    $('.edit-btn').click(function(e) {
+        let loanId = $(this).parent().data('id')
+        let currentLoan = loans.find(loan => loan.id === loanId)
+
+        var current = new Date(currentLoan.loan_date);
+
+        var dateStr = current.getFullYear() + '-' + ('0' + (current.getMonth() + 1)).slice(-2) + '-' + ('0' + current.getDate()).slice(-2)
+
+        $('#edit-loan input[name=loan_id]').val(loanId);
+        $('#edit-loan input[name=current_book_id]').val(currentLoan.book_id);
+        $(`#edit-loan select[name=member_id] option[value=${currentLoan.member_id}]`).prop('selected', true);
+        $(`#edit-loan select[name=book_id] option[value=${currentLoan.book_id}]`).prop('selected', true);
+        $('#edit-loan input[name=loan_date]').val(dateStr ?? '');
+
+        $(`#edit-loan`).modal(`show`)
+    });
+
+    $('.destroy-btn').click(function(e) {
+        let loanId = $(this).parent().data('id')
+        let currentLoan = loans.find(loan => loan.id === loanId)
+        $('#delete-loan input[name=loan_id]').val(loanId);
+        $('#delete-loan input[name=book_id]').val(currentLoan.book_id);
+
+        $(`#delete-loan`).modal(`show`)
+    });
+
+    $('.return-btn').click(function(e) {
+        let loanId = $(this).parent().data('id')
+        let currentLoan = loans.find(loan => loan.id === loanId)
+        $('#return-loan input[name=loan_id]').val(loanId);
+        $('#return-loan input[name=book_id]').val(currentLoan.book_id);
+
+        $(`#return-loan`).modal(`show`)
+    });
+</script>
+
 @endpush
