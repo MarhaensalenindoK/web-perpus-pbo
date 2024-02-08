@@ -10,7 +10,7 @@ class MemberController extends Controller
 {
     public function index(Request $request)
     {
-        $members = Member::paginate(1);
+        $members = Member::paginate(10);
         return view('member.index', [
             'members' => $members
         ]);
