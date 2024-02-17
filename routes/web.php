@@ -24,6 +24,7 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+// Termasuk kedalam Abstraksi
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/export-pdf', [DashboardController::class, 'exportPDF'])->name('export.pdf');
 

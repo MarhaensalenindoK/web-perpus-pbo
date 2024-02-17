@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Services\MemberService;
 use Illuminate\Http\Request;
 
+// Class & inheritance ke Controller
 class MemberController extends Controller
 {
     public function index(Request $request)
@@ -18,6 +19,7 @@ class MemberController extends Controller
 
     public function store(Request $request)
     {
+        // Instansiasi Object
         $memberService = new MemberService;
         $name = $request->name ?? '';
 
@@ -33,12 +35,12 @@ class MemberController extends Controller
             'date' => 'nullable',
         ]);
 
-        $author = new Member();
-        $author->name = $validatedData['name'];
-        $author->email = $validatedData['email'];
-        $author->registration_date = $validatedData['date'];
+        $member = new Member();
+        $member->name = $validatedData['name'];
+        $member->email = $validatedData['email'];
+        $member->registration_date = $validatedData['date'];
 
-        if($memberService->createMember($author)) {
+        if($memberService->createMember($member)) {
             return redirect('members')->with('status', 'Anggota berhasil ditambahkan!')
             ->with('clearStatus', true);
         }
